@@ -54,7 +54,7 @@ Observed daily discharge data from the Wudil gauge were analysed for the **1976�
 
 ### Study Area Overview
 
-![Hadejia River Watershed Overview](Map_1_Watershed_Overview.jpeg)
+![Hadejia River Watershed Overview](maps/Map_1_Watershed_Overview.jpeg)
 
 ---
 
@@ -187,7 +187,7 @@ The fitted linear relationship explains very little of the variation in annual m
 
 The overview map shows the final watershed boundary, elevation context, mapped drainage network, and Wudil gauge location.
 
-![Map 1 – Watershed Overview and Gauge Location](Map_1_Watershed_Overview.jpeg)
+![Map 1 – Watershed Overview and Gauge Location](maps/Map_1_Watershed_Overview.jpeg)
 
 ---
 

@@ -6,6 +6,10 @@ This project assesses the hydrological characteristics and observed streamflow b
 
 The analysis combines GIS-based watershed delineation, terrain and drainage analysis, land-cover assessment, and observed streamflow analysis from the Wudil gauge.
 
+### Project Aim
+
+> **To assess the hydrological behaviour of the Hadejia River watershed by analysing observed streamflow variability and its relationship with watershed characteristics using GIS and Python.**
+
 The project focuses on two complementary components:
 
 * **Spatial watershed analysis:** watershed delineation, terrain characteristics, drainage-network and morphometric analysis, and land-cover assessment using QGIS and QSWAT.

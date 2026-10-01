@@ -54,7 +54,7 @@ Observed daily discharge data from the Wudil gauge were analysed for the **1976�
 
 ### Study Area Overview
 
-![Hadejia River Watershed Overview](maps/Map_1_Watershed_Overview.jpg)
+![Hadejia River Watershed Overview](Map_1_Watershed_Overview.jpeg)
 
 ---
 
@@ -187,7 +187,7 @@ The fitted linear relationship explains very little of the variation in annual m
 
 The overview map shows the final watershed boundary, elevation context, mapped drainage network, and Wudil gauge location.
 
-![Map 1 – Watershed Overview and Gauge Location](maps/Map_1_Watershed_Overview.jpg)
+![Map 1 – Watershed Overview and Gauge Location](Map_1_Watershed_Overview.jpeg)
 
 ---
 
@@ -195,7 +195,7 @@ The overview map shows the final watershed boundary, elevation context, mapped d
 
 The watershed was divided into **10 QSWAT subbasins**. The map also shows the mapped drainage network and Wudil gauge location.
 
-![Map 2 – Subbasins and Drainage Network](maps/Map_2_Subbasins_Drainage_Network.jpg)
+![Map 2 – Subbasins and Drainage Network](maps/Map_2_Subbasins_Drainage_Network.jpeg)
 
 ---
 
@@ -207,7 +207,7 @@ Slope was derived from the 30 m SRTM DEM and classified into three classes for h
 * **5–10° — Moderate Slope**
 * **>10° — Steep Slope**
 
-![Map 3 – Slope Map](maps/Map_3_Slope.jpg)
+![Map 3 – Slope Map](maps/Map_3_Slope.jpeg)
 
 ---
 
@@ -215,7 +215,7 @@ Slope was derived from the 30 m SRTM DEM and classified into three classes for h
 
 The land-cover map shows the spatial distribution of ESA WorldCover 2021 classes within the final watershed boundary.
 
-![Map 4 – Land-Cover Map](maps/Map_4_Land_Cover.jpg)
+![Map 4 – Land-Cover Map](maps/Map_4_Land_Cover.jpeg)
 
 ---
 

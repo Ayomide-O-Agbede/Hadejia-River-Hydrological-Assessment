@@ -419,32 +419,29 @@ Hadejia-River-Hydrological-Assessment/
 │
 ├── README.md
 │
-├── notebook/
-│   └── Hadejia_Streamflow_Hydrological_Analysis.ipynb
-│
-├── maps/
-│   ├── Map_1_Watershed_Overview.jpg
-│   ├── Map_2_Subbasins_Drainage_Network.jpg
-│   ├── Map_3_Slope.jpg
-│   └── Map_4_Land_Cover.jpg
-│
-├── figures/
-│   ├── Figure_1_Daily_Streamflow.png
-│   ├── Figure_2_Monthly_Mean_Streamflow.png
-│   ├── Figure_3_Annual_Mean_Streamflow.png
-│   ├── Figure_4_Flow_Duration_Curve.png
-│   ├── Figure_5_Monthly_Climatology.png
-│   ├── Figure_6_High_Low_Flow_Days.png
-│   ├── Figure_7_Annual_CV.png
-│   └── Figure_8_Annual_Streamflow_Trend.png
-│
 ├── documentation/
 │   ├── DATA_SOURCES.md
 │   ├── METHODOLOGY.md
 │   └── PROCESSING_NOTES.md
 │
-└── data/
-    └── README.md
+├── notebook/
+│   └── Hadejia_Streamflow_Hydrological_Analysis.ipynb
+│
+├── maps/
+│   ├── Map_1_Watershed_Overview.jpeg
+│   ├── Map_2_Subbasins_Drainage_Network.jpeg
+│   ├── Map_3_Slope.jpeg
+│   └── Map_4_Land_Cover.jpeg
+│
+└── figures/
+    ├── Figure_1_Daily_Streamflow.png
+    ├── Figure_2_Monthly_Mean_Streamflow.png
+    ├── Figure_3_Annual_Mean_Streamflow.png
+    ├── Figure_4_Flow_Duration_Curve.png
+    ├── Figure_5_Monthly_Climatology.png
+    ├── Figure_6_High_Low_Flow_Days.png
+    ├── Figure_7_Annual_CV.png
+    └── Figure_8_Annual_Streamflow_Trend.png
 ```
 
 ---

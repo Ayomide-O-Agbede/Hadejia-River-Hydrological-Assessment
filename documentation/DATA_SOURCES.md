@@ -1,151 +1,85 @@
 # Data Sources
 
-This document describes the datasets used in the **Hadejia River Watershed Hydrological Assessment**, including their sources, purpose, processing, and role in the final analysis.
-
-The project combines externally sourced datasets with GIS- and QSWAT-derived datasets produced during the analysis.
-
----
+This document lists the main datasets used in the **Hadejia River Watershed Hydrological Assessment**, their sources, purpose and important limitations.
 
 ## 1. Data Summary
 
-| Dataset                    | Source                           | Main Use                                                     | Data Type   |
-| -------------------------- | -------------------------------- | ------------------------------------------------------------ | ----------- |
-| 30 m SRTM DEM              | USGS EarthExplorer               | Elevation, terrain analysis, watershed delineation           | Raster      |
-| HydroBASINS Africa Level 6 | HydroSHEDS / HydroBASINS         | Preliminary watershed reference and DEM acquisition envelope | Vector      |
-| Wudil daily streamflow     | Global Runoff Data Centre (GRDC) | Observed streamflow analysis                                 | Time series |
-| ESA WorldCover 2021        | European Space Agency            | Land-cover analysis                                          | Raster      |
-| QSWAT watershed            | Derived using QSWAT              | Final watershed and subbasin delineation                     | Vector      |
-| QSWAT drainage network     | Derived using QSWAT              | Drainage-network and morphometric analysis                   | Vector      |
-| Processed slope raster     | Derived from SRTM DEM in QGIS    | Slope analysis and mapping                                   | Raster      |
+| Dataset                    | Source                   | Main Use                                                   | Type        |
+| -------------------------- | ------------------------ | ---------------------------------------------------------- | ----------- |
+| SRTM 30 m DEM              | USGS EarthExplorer       | Elevation, terrain, watershed delineation                  | Raster      |
+| HydroBASINS Africa Level 6 | HydroSHEDS / HydroBASINS | Preliminary watershed reference and DEM acquisition extent | Vector      |
+| Wudil daily streamflow     | GRDC                     | Observed streamflow analysis                               | Time series |
+| ESA WorldCover 2021        | ESA                      | Land-cover analysis                                        | Raster      |
+| QSWAT watershed/subbasins  | Derived                  | Final watershed and subbasin analysis                      | Vector      |
+| QSWAT drainage network     | Derived                  | Drainage and morphometric analysis                         | Vector      |
+| SRTM-derived slope         | Derived in QGIS          | Slope analysis and mapping                                 | Raster      |
 
----
-
-# 2. SRTM Digital Elevation Model
+## 2. SRTM 30 m DEM
 
 ### Source
 
 **USGS EarthExplorer**
 
-### Dataset
-
-**Shuttle Radar Topography Mission (SRTM) 30 m DEM**
-
 ### Purpose
 
-The SRTM DEM was the primary elevation dataset for:
+The SRTM DEM was the main elevation dataset for:
 
 * Watershed delineation
 * Subbasin delineation
 * Elevation analysis
 * Relief calculation
-* Slope derivation
+* Slope analysis
 * Drainage-network extraction
-* Terrain visualization
-
-### Acquisition
-
-The geographic area required for the study was first identified using the HydroBASINS Africa Level 6 basin containing the Wudil gauge/Hadejia system.
-
-The required SRTM tiles were downloaded from USGS EarthExplorer and combined into a single DEM mosaic.
-
-The HydroBASINS reference was used as a **generous acquisition envelope** so that the eventual QSWAT watershed would not be cut off by the DEM coverage.
+* Terrain mapping
 
 ### Processing
 
-The DEM was processed in QGIS through the following stages:
+The downloaded SRTM tiles were mosaicked, clipped to the working area and reprojected to:
 
-1. Individual SRTM tiles were loaded into QGIS.
-2. The tiles were mosaicked into a continuous raster.
-3. The resulting mosaic was clipped to the working study extent.
-4. The DEM was reprojected from geographic coordinates to **WGS 84 / UTM Zone 32N (EPSG:32632)**.
-5. The reprojected DEM was used as the working elevation surface for QSWAT and terrain analysis.
+**WGS 84 / UTM Zone 32N — EPSG:32632**
 
-### Main Project Files
+The main processed DEM was:
 
 ```text
-Hadejia_SRTM_DEM_Mosaic.tif
-Hadejia_SRTM_DEM_Clipped.tif
 Hadejia_SRTM_DEM_UTM32N.tif
 ```
 
-### Final Watershed Analysis
+The final watershed elevation statistics were:
 
-The final watershed-specific elevation statistics were calculated using the QSWAT-derived watershed geometry and the processed SRTM DEM.
-
-Results:
-
-* Minimum elevation: **334.07 m**
-* Maximum elevation: **1,568.76 m**
-* Mean elevation: **552.53 m**
+* Minimum: **334.07 m**
+* Maximum: **1,568.76 m**
+* Mean: **552.53 m**
 * Relief: **1,234.69 m**
 
 ### Limitation
 
-The DEM represents elevation at approximately 30 m spatial resolution. Small-scale terrain features that occur below the DEM resolution may therefore not be represented.
+The DEM has a spatial resolution of approximately 30 m. Small-scale terrain features may therefore not be fully represented.
 
----
-
-# 3. HydroBASINS Africa Level 6
+## 3. HydroBASINS Africa Level 6
 
 ### Source
 
 **HydroSHEDS / HydroBASINS**
 
-### Dataset
-
-**HydroBASINS Africa Level 6**
-
 ### Purpose
 
-HydroBASINS was used as a **preliminary watershed reference**, rather than as the final project watershed boundary.
+HydroBASINS was used as an initial spatial reference for identifying the drainage basin associated with the Wudil gauge and for defining a suitable area for DEM acquisition.
 
-The Level 6 basin containing the Wudil gauge was identified and used to:
-
-* Provide an initial geographic reference for the Hadejia/Wudil system.
-* Help determine the area required for DEM acquisition.
-* Provide a generous spatial envelope around the eventual watershed.
-
-### Identified Feature
-
-The relevant HydroBASINS feature had:
+Relevant feature:
 
 * `HYBAS_ID = 1060708880`
 * `NEXT_DOWN = 1060700890`
-* `UP_AREA ≈ 24,069.7 km²`
+* Upstream area ≈ **24,069.7 km²**
 
-### Processing
+### Important Processing Decision
 
-The original Africa Level 6 shapefile was loaded into QGIS.
+The HydroBASINS boundary was **not used as the final watershed boundary**.
 
-The HydroBASINS Level 6 shapefile was converted to GeoPackage to satisfy the USGS spatial-input requirement encountered during DEM acquisition.
+The final watershed was delineated independently using QSWAT and the SRTM DEM.
 
-### Important Data-Lineage Note
+The original HydroBASINS shapefile was converted to GeoPackage format during the DEM acquisition workflow.
 
-HydroBASINS was **not used as the final Hadejia watershed boundary**.
-
-The final watershed boundary used throughout the project was generated independently using **QSWAT** from the processed SRTM DEM and the Wudil outlet location.
-
-Therefore:
-
-```text
-HydroBASINS
-      ↓
-Preliminary geographic reference
-      ↓
-DEM acquisition envelope
-      ↓
-SRTM DEM
-      ↓
-QSWAT watershed delineation
-      ↓
-Final Hadejia watershed
-```
-
-This distinction is important because the HydroBASINS upstream area and the final QSWAT watershed area are not identical.
-
----
-
-# 4. Wudil Streamflow Dataset
+## 4. Wudil Daily Streamflow
 
 ### Source
 
@@ -153,504 +87,259 @@ This distinction is important because the HydroBASINS upstream area and the fina
 
 ### Station
 
-**Wudil**
+**Wudil — GRDC Station 1837410**
 
-### GRDC Station ID
-
-**1837410**
-
-### Coordinates
+Approximate coordinates:
 
 * Latitude: **11.797° N**
 * Longitude: **8.834° E**
 
 ### Data Type
 
-Daily observed streamflow discharge.
+Daily observed discharge in:
 
-### Original Record
+**m³/s**
 
-The GRDC dataset contains daily observations extending beyond the period selected for this project.
+The original GRDC `.day` file contains daily observations and uses `-9999` as the missing-value code.
 
-The original data file contains:
-
-* Daily measurements
-* One measurement per day
-* Discharge values in **m³/s**
-* Missing-value code: **−9999.000**
-
-### Project Study Period
-
-The analysis was restricted to:
+### Selected Study Period
 
 **1 January 1976 – 31 December 1990**
 
-This produced:
+After processing:
 
 * **5,479 daily observations**
-* **0 missing discharge values after quality control**
+* No missing discharge values within the selected period
 
-### Processing
+Key statistics:
 
-The original GRDC `.day` file was read and processed in Python.
+* Mean: **35.32 m³/s**
+* Median: **14.00 m³/s**
+* Minimum: **0 m³/s**
+* Maximum: **704.68 m³/s**
 
-The processing workflow included:
+### Derived Analyses
 
-1. Reading the fixed-width/space-separated daily observations.
-2. Replacing the GRDC missing-value code (`-9999.000`) with a null value.
-3. Creating a date field from year, month, and day.
-4. Filtering the observations to the 1976–1990 study period.
-5. Checking the resulting dataset for missing discharge values.
-6. Using the cleaned time series for subsequent hydrological analysis.
+The streamflow dataset was used to produce:
 
-### Main Input File
-
-```text
-Hadejia.day
-```
-
-### Analyses Derived from the Dataset
-
-The streamflow dataset was used to calculate:
-
-* Daily streamflow hydrograph
+* Daily hydrograph
 * Monthly mean discharge
 * Annual mean discharge
 * Flow Duration Curve
-* Q10
-* Q50
-* Q90
-* High-flow threshold
-* Low-flow threshold
-* High- and low-flow days
+* Q10, Q50 and Q90
+* High- and low-flow thresholds
 * Recorded zero-discharge days
 * Monthly climatology
 * Annual coefficient of variation
 * Annual linear trend
 
-### Key Dataset Statistics
-
-| Parameter                    |           Value |
-| ---------------------------- | --------------: |
-| Mean discharge               |  **35.32 m³/s** |
-| Median discharge             |  **14.00 m³/s** |
-| Minimum discharge            |   **0.00 m³/s** |
-| Maximum recorded discharge   | **704.68 m³/s** |
-| Standard deviation           |  **58.09 m³/s** |
-| Q10                          |   **95.9 m³/s** |
-| Q50                          |   **14.0 m³/s** |
-| Q90                          |    **1.9 m³/s** |
-| Recorded zero-discharge days |          **60** |
-
 ### Limitation
 
-The analysis describes the observed discharge record at a **single gauge station** and does not by itself represent streamflow conditions at every location within the watershed.
+The analysis is based on a single gauge and therefore represents observed streamflow at Wudil rather than every location in the watershed.
 
-Recorded zero-discharge values were retained as reported in the source dataset and were not independently validated against field observations.
+The recorded zero-discharge values were retained but were not independently field-validated.
 
----
+GRDC data should also be treated according to the provider's data-use and redistribution conditions.
 
-# 5. ESA WorldCover 2021
+## 5. ESA WorldCover 2021
 
 ### Source
 
 **European Space Agency (ESA) WorldCover**
 
-### Dataset
-
-**ESA WorldCover 2021**
-
 ### Purpose
 
-WorldCover 2021 was used to provide a spatial representation of land-cover conditions within the final Hadejia watershed.
+ESA WorldCover 2021 was used to describe the spatial distribution of land cover within the final watershed.
 
-The land-cover analysis supports the broader watershed assessment by showing the spatial distribution of major land-cover classes.
+The original classes include:
 
-### Land-Cover Classes Used
-
-The WorldCover categorical classes represented in the project include:
-
-| Class Value | Land-Cover Class         |
-| ----------: | ------------------------ |
-|          10 | Tree cover               |
-|          20 | Shrubland                |
-|          30 | Grassland                |
-|          40 | Cropland                 |
-|          50 | Built-up                 |
-|          60 | Bare / sparse vegetation |
-|          80 | Permanent water bodies   |
-|          90 | Herbaceous wetland       |
+* Tree cover
+* Shrubland
+* Grassland
+* Cropland
+* Built-up
+* Bare/sparse vegetation
+* Permanent water bodies
+* Herbaceous wetland
 
 ### Processing
 
-The WorldCover dataset was:
+The raster was prepared and clipped to the final watershed boundary.
 
-1. Loaded into QGIS.
-2. Reprojected to the project working coordinate system where required.
-3. Clipped to the final Hadejia watershed boundary.
-4. Styled using categorical land-cover classes.
-5. Used to produce the final land-cover map.
-
-### Main Project File
-
-```text
-Hadejia_WorldCover_Watershed.tif
-```
+The watershed-specific output was used for the final land-cover map.
 
 ### Limitation
 
-WorldCover represents land-cover classes for the **2021 reference year**. It therefore describes land cover for that period and should not be interpreted as a direct representation of land-cover conditions throughout the 1976–1990 streamflow analysis period.
+The dataset represents **2021**, while the streamflow analysis covers **1976–1990**. The land-cover layer should therefore be treated as a spatial representation of the watershed rather than as a direct representation of land cover during the streamflow observation period.
 
----
+## 6. QSWAT-Derived Watershed and Subbasins
 
-# 6. QSWAT-Derived Watershed and Subbasins
+These are derived datasets produced during watershed delineation.
 
-### Source
-
-**Derived from SRTM DEM using QSWAT**
-
-### Purpose
-
-The QSWAT output provided the **final watershed boundary** and the subdivision of the watershed into hydrologically connected subbasins.
-
-### Delineation Inputs
-
-The delineation used:
+### Inputs
 
 * Processed 30 m SRTM DEM
 * Wudil gauge location
 * Outlet/snap location
 * QSWAT stream-definition settings
 
-The stream threshold used during the delineation was approximately **1,088,390 cells**, corresponding to an area of approximately **1,008 km²** at the working DEM resolution.
+### Main Settings
 
-A snap threshold of **300 m** was used to associate the gauge/outlet with the derived drainage network.
+* Stream threshold: approximately **1,088,390 cells**
+* Approximate threshold area: **1,008 km²**
+* Snap threshold: **300 m**
 
-### Output
+### Outputs
 
-The QSWAT delineation produced:
-
+* Final watershed boundary
 * **10 subbasins**
-* Watershed boundary
-* Derived stream/reach network
-* Snapped outlet location
+* Snapped outlet
+* QSWAT drainage network
 
-### Final Fixed Geometry
-
-The original watershed geometry contained invalid geometry that was corrected in QGIS using **Fix Geometries**.
-
-The corrected geometry was stored as:
-
-```text
-Hadejia_Watershed_Fixed.gpkg
-```
-
-and
-
-```text
-Hadejia_Watershed_Fixed_Geometry.gpkg
-```
-
-The final watershed analysis used the corrected geometry.
-
-### Watershed Area
-
-The total watershed area calculated from the fixed geometry is:
+The final watershed area was:
 
 **22,619.66 km²**
 
-### Coordinate Reference System
+The watershed geometry was corrected using QGIS **Fix Geometries** before subsequent spatial analysis.
 
-**WGS 84 / UTM Zone 32N (EPSG:32632)**
+## 7. QSWAT-Derived Drainage Network
 
----
+The drainage network was generated during QSWAT watershed delineation.
 
-# 7. QSWAT-Derived Drainage Network
+Final characteristics:
 
-### Source
-
-**Derived using QSWAT from the processed SRTM DEM**
-
-### Purpose
-
-The QSWAT-derived drainage network was used for:
-
-* Drainage-network mapping
-* Reach-length calculation
-* Mapped drainage density
-* Stream-order analysis
-* Mapped reach frequency
-
-### Derived Network
-
-The mapped network contains:
-
-* **10 reaches**
-* **791.96 km** total mapped reach length
+* **10 mapped reaches**
+* **791.96 km** total mapped length
 * Maximum mapped stream order: **3rd order**
 
-### Stream Order
+The network was used to calculate:
 
-The QSWAT-derived network contains:
-
-| Stream Order | Number of Reaches |
-| -----------: | ----------------: |
-|    1st order |                 6 |
-|    2nd order |                 2 |
-|    3rd order |                 2 |
-
-The stream-order values are the **QSWAT-derived `strmOrder` values** and were not independently recalculated using a separate manual Strahler-order procedure.
-
-### Drainage Density
-
-Mapped drainage density was calculated as:
-
-$$
-D_d=\frac{L}{A}
-$$
-
-where:
-
-* \(D_d\) = mapped drainage density (km/km²)
-* \(L\) = total mapped drainage length (km)
-* \(A\) = watershed area (km²)
-
-Using:
-
-$$
-D_d=\frac{791.96}{22619.66}
-$$
-
-gives:
-
-**0.0350 km/km²**
+* Total mapped drainage length
+* Stream order
+* Mapped drainage density
+* Mapped reach frequency
 
 ### Limitation
 
-Because the drainage network was derived using QSWAT and a selected DEM/stream threshold, the result represents the **mapped QSWAT-derived drainage network** rather than every natural or artificial drainage feature within the watershed.
+The network represents the QSWAT-derived drainage structure and does not necessarily include every natural or artificial drainage feature in the watershed.
 
----
+## 8. Derived Slope Raster
 
-# 8. Derived Slope Raster
+Slope was calculated from the projected 30 m SRTM DEM using QGIS.
 
-### Source
+The resulting slope surface was clipped to the final watershed.
 
-**Derived from the 30 m SRTM DEM in QGIS**
-
-### Purpose
-
-The slope raster was used to examine terrain steepness across the watershed and produce the watershed-specific slope map.
-
-### Processing
-
-Slope was calculated from the reprojected SRTM DEM in QGIS.
-
-The resulting slope raster was subsequently clipped to the final Hadejia watershed boundary.
-
-### Main Watershed-Specific File
+Output:
 
 ```text
 Hadejia_Slope_Watershed.tif
 ```
 
-### Watershed-Specific Range
+Final watershed-specific values:
 
-The clipped watershed slope raster has a maximum slope of approximately:
+* Area-weighted mean slope: **2.16°**
+* Maximum slope: **47.30°**
 
-**47.30°**
+The final map used:
 
-The area-weighted mean slope used in the integrated analysis was:
+* 0–5° — Low Slope
+* 5–10° — Moderate Slope
+* > 10° — Steep Slope
 
-**2.16°**
+These classes were selected for this project and are not universal slope standards.
 
-### Classification
+## 9. Data Lineage
 
-For cartographic and hydrological representation, the slope was classified into:
-
-| Range     | Class          |
-| --------- | -------------- |
-| **0–5°**  | Low Slope      |
-| **5–10°** | Moderate Slope |
-| **>10°**  | Steep Slope    |
-
-These classes were selected for this project to provide a clear representation of the terrain distribution and are not presented as universal hydrological thresholds.
-
----
-
-# 9. Coordinate Reference System
-
-The main spatial analysis was carried out using:
-
-**WGS 84 / UTM Zone 32N**
-
-**EPSG:32632**
-
-The UTM projection was used for spatial calculations such as:
-
-* Area
-* Perimeter
-* Distance
-* Drainage length
-* Drainage density
-* Spatial overlays
-* Terrain analysis
-
-The original HydroBASINS and Wudil gauge datasets were initially available in geographic coordinates and were reprojected where required for the spatial analysis.
-
----
-
-# 10. Data Lineage
-
-The main data-processing lineage for the project can be summarized as follows:
+The main spatial data lineage was:
 
 ```text
-HydroBASINS Africa Level 6
-        │
-        └── Preliminary geographic reference
-                    │
-                    ▼
-             DEM acquisition area
-                    │
-                    ▼
-             USGS SRTM 30 m DEM
-                    │
-                    ▼
-       Mosaic → Clip → Reproject
-                    │
-                    ▼
-        QSWAT watershed delineation
-                    │
-          ┌─────────┴─────────┐
-          ▼                   ▼
-    Final watershed       Subbasins
-          │                   │
-          ├──────────┐        │
-          ▼          ▼        ▼
-       Terrain    Drainage   Morphometric
-       analysis   network     analysis
-          │          │
-          ▼          ▼
-       Slope      Reach length,
-                  stream order,
-                  drainage density
+HydroBASINS
+      ↓
+Preliminary spatial reference
+      ↓
+DEM acquisition extent
+      ↓
+SRTM DEM
+      ↓
+Mosaic / Clip / Reproject
+      ↓
+QSWAT
+      ↓
+Final watershed + subbasins + drainage network
+      ↓
+Terrain / morphometric / slope analysis
 ```
 
-The hydrological time-series branch is separate:
+The streamflow data lineage was:
 
 ```text
-GRDC Wudil Gauge
-Station 1837410
-        │
-        ▼
-Daily observed discharge
-        │
-        ▼
-Filter to 1976–1990
-        │
-        ▼
+GRDC Wudil Station
+      ↓
+Daily discharge
+      ↓
+Missing-value processing
+      ↓
+1976–1990 filtering
+      ↓
 Quality control
-        │
-        ├── Daily hydrograph
-        ├── Monthly mean
-        ├── Annual mean
-        ├── Flow Duration Curve
-        ├── High/low-flow analysis
-        ├── Monthly climatology
-        ├── Annual CV
-        └── Trend analysis
+      ↓
+Hydrological and statistical analysis
 ```
 
-Land-cover analysis forms another independent branch:
+The land-cover lineage was:
 
 ```text
 ESA WorldCover 2021
-        │
-        ▼
-Reprojection / preparation
-        │
-        ▼
+      ↓
+Preparation
+      ↓
 Clip to final watershed
-        │
-        ▼
+      ↓
 Land-cover map
 ```
 
----
-
-# 11. External Data vs. Derived Data
-
-It is important to distinguish between datasets obtained from external providers and datasets generated during this project.
+## 10. External and Derived Data
 
 ### External datasets
 
-* USGS SRTM 30 m DEM
-* HydroBASINS Africa Level 6
-* GRDC Wudil daily streamflow
-* ESA WorldCover 2021
+The main external datasets were:
 
-### Derived project datasets
+1. **SRTM 30 m DEM**
+2. **HydroBASINS Africa Level 6**
+3. **GRDC Wudil daily streamflow**
+4. **ESA WorldCover 2021**
+
+### Derived datasets
+
+The main derived outputs were:
 
 * Final QSWAT watershed
 * QSWAT subbasins
 * QSWAT drainage network
-* Reprojected and processed DEM
+* Projected/processed DEM
 * Watershed-specific slope raster
-* Fixed watershed geometry
-* Derived morphometric statistics
-* Hydrological statistics and figures generated in Python
+* Processed streamflow dataset
+* Streamflow figures and summary statistics
 
-Derived datasets are products of the processing workflow documented in this repository and should be interpreted together with the processing parameters and source-data limitations.
+## 11. Data Quality Notes
 
----
+The following points are important when interpreting the datasets:
 
-# 12. Data Availability and Redistribution
+* HydroBASINS was used as a preliminary reference, not as the final watershed boundary.
+* The final watershed was generated using QSWAT from the SRTM DEM.
+* The drainage network is QSWAT-derived.
+* Drainage density is therefore reported as **mapped drainage density**.
+* Terrain statistics depend on the 30 m SRTM DEM and final watershed boundary.
+* The slope results depend on the DEM and the watershed-specific clipped raster.
+* ESA WorldCover represents **2021** and does not match the 1976–1990 streamflow period.
+* Streamflow represents one gauge location.
+* Recorded zero-discharge values were not independently validated.
+* No gap filling or rainfall-runoff simulation was applied to the streamflow record.
 
-The project uses data from several external providers with their own access, licensing, attribution, and redistribution conditions.
+## 12. Data Availability
 
-External datasets are therefore not automatically redistributed through this repository.
+The repository contains the processed and derived outputs needed to understand and reproduce the analysis where redistribution of the original datasets is permitted.
 
-In particular, the original **GRDC daily streamflow dataset** should only be redistributed where the applicable GRDC data-use conditions permit it.
+External datasets remain subject to the terms and conditions of their respective providers, particularly the GRDC streamflow data.
 
-The repository documentation records the dataset identity, station information, study period, processing workflow, and derived results so that the analytical process remains transparent even when the original source files are not included.
-
-Users reproducing the analysis should obtain the original datasets directly from their respective providers and follow the applicable terms of use.
-
----
-
-# 13. Data Quality and Interpretation Notes
-
-Several considerations should be kept in mind when interpreting the project datasets:
-
-1. **HydroBASINS is a preliminary reference.** It was not used as the final watershed boundary.
-
-2. **QSWAT defines the final watershed.** The final boundary and subbasins were generated from the SRTM DEM and Wudil outlet setup.
-
-3. **The drainage network is QSWAT-derived.** Drainage density and reach frequency therefore describe the mapped network produced by the delineation settings.
-
-4. **Terrain statistics are watershed-specific.** Elevation statistics used in the project were calculated over the final watershed rather than using the statistics of the larger DEM acquisition area.
-
-5. **Slope values depend on the DEM and processing.** The final slope map uses the watershed-clipped slope raster.
-
-6. **WorldCover represents 2021.** It should not be treated as a historical land-cover dataset for the 1976–1990 streamflow period.
-
-7. **Streamflow represents one observation point.** The Wudil record provides observed discharge at the gauge and does not directly describe spatially distributed flow across the entire watershed.
-
-8. **Recorded zero-discharge values are dataset observations.** They were not independently verified against field measurements.
-
----
-
-## 14. Summary
-
-The project integrates four main external data sources:
-
-* **USGS SRTM 30 m DEM** for elevation and terrain-based watershed analysis.
-* **HydroBASINS Africa Level 6** for preliminary basin reference and DEM acquisition planning.
-* **GRDC Wudil Station 1837410** for observed daily streamflow analysis.
-* **ESA WorldCover 2021** for land-cover assessment.
-
-These datasets were processed in **QGIS/QSWAT and Python** to produce the final watershed boundary, subbasins, drainage network, terrain products, land-cover map, hydrological statistics, and visualizations presented in the project.
-
-The complete processing workflow is described in:
-
-* [`METHODOLOGY.md`](METHODOLOGY.md)
-* [`PROCESSING_NOTES.md`](PROCESSING_NOTES.md)
+The repository therefore documents the source, processing and role of each dataset without assuming redistribution rights for externally sourced data.

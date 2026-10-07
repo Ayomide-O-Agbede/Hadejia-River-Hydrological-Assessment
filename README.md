@@ -187,4 +187,13 @@ Important limitations include:
 * Rainfall, evaporation, abstraction, reservoir operations and other possible controls were not jointly modelled.
 * No calibrated rainfall-runoff simulation was performed.
 
+## Author
+
+**Ayomide Odunayo Agbede**
+
+Hydrogeophysicist | GIS & Remote Sensing | Hydrology & Water Resources
+
+This project was independently developed as part of my research and portfolio work in **watershed hydrology, GIS, spatial analysis, and water resources assessment**.
+
+
 For the full analytical procedures, processing decisions and data sources, see the files in `DOCUMENTATION/`.

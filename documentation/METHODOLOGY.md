@@ -329,9 +329,14 @@ The highest average monthly discharge occurred in **August at 115.80 m³/s**.
 
 Annual coefficient of variation was calculated from the standard deviation and mean of daily discharge for each year:
 
-$$
-CV(\%)=\frac{\sigma}{\bar{Q}}\times100
-$$
+```math
+CV(\%) = \frac{\sigma}{\bar{Q}} \times 100
+```
+
+where:
+
+* \(\sigma\) = standard deviation of daily discharge for the year (m³/s)
+* \(\bar{Q}\) = mean daily discharge for the year (m³/s)
 
 The annual CV values ranged from:
 

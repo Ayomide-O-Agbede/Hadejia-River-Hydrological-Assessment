@@ -93,17 +93,24 @@ The initial watershed geometry contained invalid geometry and was corrected usin
 
 ### Area
 
-The corrected projected watershed/subbasin geometries were used to calculate area.
+The corrected projected watershed and subbasin geometries were used to calculate area.
 
-Total watershed area:
+**Total watershed area:**
 
 **22,619.66 km²**
 
-Subbasin contribution was calculated as:
+The contribution of each subbasin to the total watershed area was calculated as:
 
-$$
-A_i(\%)=\frac{A_i}{A_{total}}\times100
-$$
+```math
+A_i(\%) = \frac{A_i}{A_w} \times 100
+```
+
+where:
+
+* \(A_i\) = area of the individual subbasin (km²)
+* \(A_w\) = total watershed area (km²)
+
+The calculated subbasin areas were then checked against the total watershed area to confirm that their combined area accounted for approximately 100% of the watershed.
 
 ### Perimeter
 
